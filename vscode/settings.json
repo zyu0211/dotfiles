@@ -1,0 +1,139 @@
+{
+    // ===================基础设置=======================
+    "workbench.iconTheme": "vscode-icons",
+    "files.autoSave": "afterDelay",
+    "editor.fontSize": 16,
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+    "files.autoGuessEncoding": true,
+    "workbench.list.smoothScrolling": true,
+    "editor.cursorSmoothCaretAnimation": "on",
+    "editor.smoothScrolling": true,
+    "editor.cursorBlinking": "smooth",
+    "editor.mouseWheelZoom": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+    "editor.formatOnSave": true,
+    "diffEditor.wordWrap": "on",
+    "editor.guides.bracketPairs": true,
+    "editor.suggest.snippetsPreventQuickSuggestions": true,
+    "editor.acceptSuggestionOnEnter": "smart",
+    "editor.suggestSelection": "recentlyUsed",
+    "window.dialogStyle": "custom",
+    "debug.showBreakpointsInOverviewRuler": true,
+    "editor.fontFamily": "Hack",
+    "window.zoomLevel": 0.4,
+    "workbench.colorTheme": "One Dark Pro",
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "terminal.integrated.defaultProfile.linux": "zsh",
+    "terminal.integrated.smoothScrolling": true,
+    "terminal.integrated.fontFamily": "MesloLGS NF",
+    // ===================vim设置=======================
+    "vim.leader": "<space>",
+    "vim.useSystemClipboard": true,
+    "vim.ignorecase": true,
+    "vim.foldfix": true,
+    "vim.hlsearch": true,
+    "vim.statusBarColorControl": true,
+    "vim.handleKeys": {
+        "<C-d>": true, // 向下滚动半页
+        "<C-f>": true, // 向下滚动一页
+        "<C-e>": true, // 向下滚动一行
+        "<C-s>": true, // 
+        "<C-z>": false,
+        "<C-a>": true, // 将光标所在位置的数字递增1
+        "<C-c>": true,
+        "<C-v>": true,
+        "<C-x>": true, // 将光标所在位置的数字递减 1
+    },
+    // 把esc键映射为kj，意思是在插入模式下，按下连续按下 k j 会回到正常模式
+    "vim.insertModeKeyBindings": [
+        {
+            "before": [
+                "j",
+                "k"
+            ],
+            "after": [
+                "<Esc>"
+            ]
+        },
+    ],
+    "vim.normalModeKeyBindings": [
+        { // 变量重命名
+            "before": [
+                "leader",
+                "r"
+            ],
+            "commands": [
+                "editor.action.rename"
+            ]
+        },
+        { // 文件保存 
+            "before": [
+                "leader",
+                "w"
+            ],
+            "commands": [
+                ":w!"
+            ]
+        },
+        { // 文件退出
+            "before": [
+                "leader",
+                "q"
+            ],
+            "commands": [
+                ":q!"
+            ]
+        },
+        { // 取消高亮
+            "before": [
+                "<C-n>"
+            ],
+            "commands": [
+                ":nohl"
+            ]
+        },
+        {
+            "before": [
+                "H"
+            ],
+            "after": [
+                "^"
+            ]
+        },
+        {
+            "before": [
+                "L"
+            ],
+            "after": [
+                "$"
+            ]
+        },
+        {
+            "before": [
+                "leader",
+                "<tab>"
+            ],
+            "commands": [
+                ":tabnext"
+            ],
+        },
+        {
+            "before": [
+                "leader",
+                "leader",
+                "<tab>"
+            ],
+            "commands": [
+                ":tabprevious"
+            ],
+        },
+    ],
+    "workbench.colorCustomizations": {
+        "statusBar.background": "#005f5f",
+        "statusBar.noFolderBackground": "#005f5f",
+        "statusBar.debuggingBackground": "#005f5f"
+    },
+    // Highlight Line 插件设置
+    "highlightLine.borderWidth": "1px",
+}
