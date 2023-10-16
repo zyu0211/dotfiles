@@ -58,6 +58,9 @@ alias ls='ls --color=auto'
 alias proxy='export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890'
 alias unproxy='unset all_proxy'
 
+alias vi='vim'
+alias vim='nvim'
+
 # 设置* 匹配
 setopt no_nomatch
 
