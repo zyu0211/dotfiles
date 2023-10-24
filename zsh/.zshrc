@@ -61,6 +61,8 @@ alias unproxy='unset all_proxy'
 alias vi='vim'
 alias vim='nvim'
 
+alias code=/mnt/c/Soft/Microsoft\ VS\ Code/bin/code
+
 # 设置* 匹配
 setopt no_nomatch
 
