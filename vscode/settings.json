@@ -28,6 +28,7 @@
     "terminal.integrated.smoothScrolling": true,
     "terminal.integrated.fontFamily": "MesloLGS NF",
     // ===================vim设置=======================
+    "editor.lineNumbers": "relative",    //相对行号
     "vim.leader": "<space>",
     "vim.useSystemClipboard": true,
     "vim.ignorecase": true,
