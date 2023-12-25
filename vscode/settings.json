@@ -1,11 +1,11 @@
 {
-    // ===================基础设置=======================
-    "workbench.iconTheme": "vscode-icons",
+    // =================================================
+    // =================== 基础设置 =====================
+    // =================================================
     "files.autoSave": "afterDelay",
+    "files.autoGuessEncoding": true,
     "editor.fontSize": 16,
     "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
-    "files.autoGuessEncoding": true,
-    "workbench.list.smoothScrolling": true,
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.smoothScrolling": true,
     "editor.cursorBlinking": "smooth",
@@ -13,40 +13,49 @@
     "editor.formatOnPaste": true,
     "editor.formatOnType": true,
     "editor.formatOnSave": true,
-    "diffEditor.wordWrap": "on",
+    "editor.wordWrap": "on",
     "editor.guides.bracketPairs": true,
     "editor.suggest.snippetsPreventQuickSuggestions": true,
     "editor.acceptSuggestionOnEnter": "smart",
     "editor.suggestSelection": "recentlyUsed",
+    "editor.fontFamily": "MesloLGM Nerd Font",
+    "editor.lineNumbers": "relative",
+    "editor.detectIndentation": false,
+    "editor.renderControlCharacters": true,
+    "editor.renderWhitespace": "all", //tab 使用空格表示
+    "workbench.colorTheme": "One Dark Pro",
+    "workbench.iconTheme": "vscode-icons",
+    "workbench.list.smoothScrolling": true,
+    "workbench.colorCustomizations": {
+        "statusBar.background": "#5f00af",
+        "statusBar.noFolderBackground": "#5f00af",
+        "statusBar.debuggingBackground": "#5f00af",
+        "statusBar.foreground": "#ffffff",
+        "statusBar.debuggingForeground": "#ffffff"
+    },
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "terminal.integrated.smoothScrolling": true,
+    "terminal.integrated.fontFamily": "MesloLGM Nerd Font",
     "window.dialogStyle": "custom",
     "debug.showBreakpointsInOverviewRuler": true,
-    "editor.fontFamily": "Hack",
-    "window.zoomLevel": 0.4,
-    "workbench.colorTheme": "One Dark Pro",
-    "terminal.integrated.enableMultiLinePasteWarning": false,
-    "terminal.integrated.defaultProfile.linux": "zsh",
-    "terminal.integrated.smoothScrolling": true,
-    "terminal.integrated.fontFamily": "MesloLGS NF",
-    // ===================vim设置=======================
-    "editor.lineNumbers": "relative",    //相对行号
+    // ================================================
+    // =================== vim设置 =====================
+    // ================================================
     "vim.leader": "<space>",
+    "vim.easymotion": true,
     "vim.useSystemClipboard": true,
     "vim.ignorecase": true,
     "vim.foldfix": true,
     "vim.hlsearch": true,
     "vim.statusBarColorControl": true,
-    "vim.handleKeys": {
-        "<C-d>": true, // 向下滚动半页
-        "<C-f>": true, // 向下滚动一页
-        "<C-e>": true, // 向下滚动一行
-        "<C-s>": true, // 
+    "vim.useCtrlKeys": true, //vim 接管 "Ctrl + any" 的组合按键
+    "vim.handleKeys": { // 下面的按键由 VScode 处理
+        "<C-f>": false,
         "<C-z>": false,
-        "<C-a>": true, // 将光标所在位置的数字递增1
-        "<C-c>": true,
-        "<C-v>": true,
-        "<C-x>": true, // 将光标所在位置的数字递减 1
+        "<C-c>": false,
+        "<C-v>": false,
     },
-    // 把esc键映射为kj，意思是在插入模式下，按下连续按下 k j 会回到正常模式
+    // 插入模式下，把 esc 键映射为 jk
     "vim.insertModeKeyBindings": [
         {
             "before": [
@@ -59,7 +68,26 @@
         },
     ],
     "vim.normalModeKeyBindings": [
-        { // 变量重命名
+        { //调用 vscode 的全局命令 <==> ctrl + shift + p
+            "before": [
+                "<leader>",
+                "g",
+                "c"
+            ],
+            "commands": [
+                "workbench.action.showCommands"
+            ]
+        },
+        { //打开资源管理器 <==> ctrl + shift + e
+            "before": [
+                "<leader>",
+                "e"
+            ],
+            "commands": [
+                "workbench.view.explorer"
+            ]
+        },
+        { //变量重命名
             "before": [
                 "leader",
                 "r"
@@ -130,11 +158,127 @@
             ],
         },
     ],
-    "workbench.colorCustomizations": {
-        "statusBar.background": "#005f5f",
-        "statusBar.noFolderBackground": "#005f5f",
-        "statusBar.debuggingBackground": "#005f5f"
-    },
     // Highlight Line 插件设置
     "highlightLine.borderWidth": "1px",
+    "vsicons.dontShowNewVersionMessage": true,
+    // Other 设置
+    "go.toolsManagement.autoUpdate": true,
+    "explorer.confirmDelete": false,
+    // ====================================================
+    // =================== Latex设置 =======================
+    // ====================================================
+    "latex-workshop.latex.autoBuild.run": "never", //不自动编译
+    "latex-workshop.showContextMenu": true, //启用上下文 Latex 菜单
+    "latex-workshop.intellisense.package.enabled": true, //从宏包中自动提取命令和环境，补全正在编写的代码
+    "latex-workshop.message.error.show": false, //文档编译错误时不弹出 error 弹窗
+    "latex-workshop.message.warning.show": false, //文档编译错误时不弹出 warning 弹窗
+    "latex-workshop.latex.tools": [ //编译链中使用的编译命令
+        {
+            "name": "xelatex",
+            "command": "xelatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOCFILE%"
+            ]
+        },
+        {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOCFILE%"
+            ]
+        },
+        {
+            "name": "latexmk",
+            "command": "latexmk",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-pdf",
+                "-outdir=%OUTDIR%",
+                "%DOCFILE%"
+            ]
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
+            "args": [
+                "%DOCFILE%"
+            ]
+        }
+    ],
+    "latex-workshop.latex.recipes": [ //编译链定义
+        {
+            "name": "XeLaTeX",
+            "tools": [
+                "xelatex"
+            ]
+        },
+        {
+            "name": "PDFLaTeX",
+            "tools": [
+                "pdflatex"
+            ]
+        },
+        {
+            "name": "BibTeX",
+            "tools": [
+                "bibtex"
+            ]
+        },
+        {
+            "name": "LaTeXmk",
+            "tools": [
+                "latexmk"
+            ]
+        },
+        {
+            "name": "xelatex -> bibtex -> xelatex*2",
+            "tools": [
+                "xelatex",
+                "bibtex",
+                "xelatex",
+                "xelatex"
+            ]
+        },
+        {
+            "name": "pdflatex -> bibtex -> pdflatex*2",
+            "tools": [
+                "pdflatex",
+                "bibtex",
+                "pdflatex",
+                "pdflatex"
+            ]
+        },
+    ],
+    "latex-workshop.latex.clean.fileTypes": [ //编译完成后要清除的辅助文件类型
+        "*.aux",
+        "*.bbl",
+        "*.blg",
+        "*.idx",
+        "*.ind",
+        "*.lof",
+        "*.lot",
+        "*.out",
+        "*.toc",
+        "*.acn",
+        "*.acr",
+        "*.alg",
+        "*.glg",
+        "*.glo",
+        "*.gls",
+        "*.ist",
+        "*.fls",
+        "*.log",
+        "*.fdb_latexmk"
+    ],
+    "latex-workshop.latex.autoClean.run": "onFailed", //当编译失败时，清除辅助文件
+    "latex-workshop.latex.recipe.default": "lastUsed", //默认编译链
+    "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click" //反向同步
 }

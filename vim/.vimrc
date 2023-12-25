@@ -1,4 +1,4 @@
-"==================================
+"===================================
 ""    Vim基本配置
 "===================================
 
@@ -7,12 +7,31 @@ set nocompatible
 "配置backspace键工作方式
 set backspace=indent,eol,start
 
+" 1=启动显示状态行, 2=总是显示状态行
+" 设置总是显示状态行,方便看到当前文件名
+set laststatus=2
+
+"设置在编辑过程中右下角显示光标的行列信息
+"此项不设置，改为自定义设置状态栏显示内容
+" set ruler
+
+"设置状态行显示的内容
+” %F: 显示当前文件的完整路径
+" %r: 如果readonly,会显示[RO]
+“ %B: 显示光标下字符的编码值,十六进制
+" %l:光标所在的行号. %v:光标所在的虚拟列号
+" %P: 显示当前内容在整个文件中的百分比
+" %H 和 %M 是 strftime() 函数的参数,获取时间. 
+set statusline=%F%r\ [HEX=%B][%l,%v,%P]\ %{strftime(\"%H:%M\")}
+
 "显示行号
 set number
-"设置在编辑过程中右下角显示光标的行列信息
-set ruler
 "当一行文字很长时取消换行
 set nowrap
+
+"使用Tab键补全时,在状态栏显示匹配的列表
+"方便查看都有哪些命令符合补全条件
+set wildmenu
 
 "在状态栏显示正在输入的命令
 set showcmd
@@ -25,12 +44,32 @@ set nobackup
 set noswapfile
 set nowritebackup
 
-"突出现实当前行列
+"突出现实当前行
 set cursorline
+"只高亮行号部分,不影响正文内容
+set cursorlineopt=number
+"突出现实当前列
 "set cursorcolumn
 
 "设置匹配模式 类似当输入一个左括号时会匹配相应的那个右括号
 set showmatch
+
+"高亮显示所有搜索到的内容
+set hlsearch
+
+"光标立刻跳转到搜索到内容
+set incsearch
+
+"搜索到最后匹配的位置后, 再次搜索不回到第一个匹配处
+set nowrapscan
+
+"去掉输入错误时的提示声音
+set noeb 
+
+"默认按下 Esc 后,需要等待 1 秒才生效
+"设置 Esc 超时时间为 100ms, 尽快生效 
+set ttimeout
+set ttimeoutlen=100
 
 "设置C/C++方式自动对齐
 set autoindent
@@ -39,13 +78,6 @@ set cindent
 "开启语法高亮功能
 syntax enable
 syntax on
-
-"指定配色方案为256色
-set t_Co=256
-let g:airline_theme='one'
-colorscheme one
-set background=dark " for the dark version
-" set background=light " for the light version
 
 "设置搜索时忽略大小写
 set ignorecase
@@ -80,6 +112,13 @@ filetype indent on
 filetype plugin on
 "启动智能补全
 filetype plugin indent on
+
+"指定配色方案为256色
+set t_Co=256
+let g:airline_theme='one'
+colorscheme one
+set background=dark " for the dark version
+" set background=light " for the light version
 
 "====================================
 ""  插件
@@ -116,8 +155,8 @@ nnoremap <leader>L <c-w>L
 nnoremap <leader>J <c-w>J
 nnoremap <leader>K <c-w>K
 " 设置移动buffer的快捷键
-nnoremap <leader>, :bprevious<cr>
-nnoremap <leader>. :bnext<cr>
+nnoremap <leader><tab><tab> :bprevious<cr>
+nnoremap <leader><tab> :bnext<cr>
 
 nmap <leader>w :w!<cr>
 nmap <leader>q :q!<cr>
@@ -125,3 +164,4 @@ nmap <leader>q :q!<cr>
 nmap H ^
 nmap L $
 imap jk <Esc>
+
