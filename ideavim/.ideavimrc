@@ -1,78 +1,77 @@
-" Find a list of commands here: https://jb.gg/h38q75
-" Find more examples here: https://jb.gg/share-ideavimrc
-" Enable IdeaVim plugins: https://jb.gg/ideavim-plugins
-" Map IDE actions to IdeaVim: https://jb.gg/abva4t
-
-" Highlight copied text
-Plug 'machakann/vim-highlightedyank'
-" Commentary plugin
-Plug 'tpope/vim-commentary'
+" 参考：https://github.com/JetBrains/ideavim
 
 " leader 键
 let g:mapleader = ' '
 
-" 中英文输入法自动切换
-set keep-english-in-normal
+" ==================================
+" 🍰🍰🍰 Extensions 🍰🍰🍰
+" ==================================
 
-" surround插件
-set surround
+Plug 'machakann/vim-highlightedyank'    " Highlight copied text
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
 
-" easymotion
+Plug 'preservim/nerdtree'
+nmap <leader>e :NERDTreeFind<CR>
+"在目录中，按下 go 打开文件并保持光标在目录
+"在目录中，按下 gi 以上下并排窗口形式打开文件(并关闭目录)
+"在目录树中，使用空格预览文件
+"光标在目录时，按Esc回到编辑器
+
+" Idea需安装插件：IdeaVim-EasyMotion
+Plug 'easymotion/vim-easymotion'
 let g:EasyMotion_do_mapping = 0
-set easymotion
 nmap <leader><leader> <Plug>(easymotion-s)
 
-" 仿真NERDTree插件
-" https://github.com/JetBrains/ideavim/wiki/NERDTree-support
-set NERDTree
-nmap <leader>e :NERDTreeFind<CR>
-
-" https://github.com/JetBrains/ideavim/blob/master/doc/IdeaVim%20Plugins.md
 Plug 'vim-scripts/ReplaceWithRegister'
 nmap rs  <Plug>ReplaceWithRegisterOperator
 nmap rss <Plug>ReplaceWithRegisterLine
 xmap rs  <Plug>ReplaceWithRegisterVisual
 
-" 高亮搜索
+" ==================================
+" 🐧🐧🐧 Basic settings 🐧🐧🐧
+" ==================================
+
+" 系统剪切板
+set clipboard^=unnamed,unnamedplus
+" x模式黏贴后重新复制被黏贴内容
+xnoremap p pgvy
+
+" 设置返回normal模式时回到英文输入法
+" Idea需安装插件：IdeaVimExtension
+set keep-english-in-normal
+
+" 将搜索匹配的文本高亮显示
 set hlsearch
 " 搜索时跳到搜索目标处
 set incsearch
-" 智能搜索
+" 忽略大小写搜索
 set ignorecase
+" 智能搜索大小写
 set smartcase
+
 " 行号显示
-set nu
+set number
 " 相对行号
-set rnu
+set relativenumber
 
 " 滚动时保持上下边距
-set scrolloff=5
+set scrolloff=8
 " 该设置可以将光标定位到窗口中间位置
 " set scrolloff=999
+
+" ===================================
+" 🌍🌍🌍 No Leader Keymaps 🌍🌍🌍
+" ===================================
 
 " Esc
 imap jk <ESC>
 
 " 取消高亮
 nmap <ESC> :noh<CR>
-nmap <C-[> :noh<CR>
 
-" 快捷方式
-nmap <leader>q :q<CR>
-nmap <leader>w :w<CR>
 nmap H ^
 nmap L $
- 
-" 拖拽行
-"nmap <C-S-j> :move +1<CR>==
-"nmap <C-S-k> :move -2<CR>==
-"xmap <C-S-j> :move '>+1<CR>gv=gv
-"xmap <C-S-k> :move '<-2<CR>gv=gv
-
-" 系统剪切板
-set clipboard^=unnamed,unnamedplus
-" x模式黏贴后重新复制被黏贴内容
-" xnoremap p pgvy
 
 " 复制黏贴
 xmap <C-c> y
@@ -82,86 +81,185 @@ imap <C-S-V> <C-r>+
 " 复制整个缓冲区
 nmap <leader>y mmggVGy`m
 
-" https://github.com/JetBrains/ideavim
-" IdeaVim: track action Ids
-nmap <C-o> <Action>(Back)
-nmap <C-i> <Action>(Forward)
-" nmap u <Action>($Undo)
-" nmap <C-r> <Action>($Redo)
-" 文件查找
+"=======Action动作获取方式
+"=======ShiftShift -> IdeaVim: track action Ids
+
+" 将Ctrl + s 映射为保存文档
+nmap <C-S> <action>(SaveAll)
+imap <C-S> <Esc><action>(SaveAll)
+
+" 找到上一个/下一个代码建议
+imap <C-[> <action>(EditorUp)
+imap <C-]> <action>(EditorDown)
+
+" 后退/后退
+nmap <C-o> <action>(Back)
+nmap <C-i> <action>(Forward)
+
+" 跳转上一个/下一个tab
+nmap [t <action>(PreviousTab)
+nmap ]t <action>(NextTab)
+
+" 跳转上一个/下一个method声明处
+nmap [f <action>(MethodUp)
+nmap ]f <action>(MethodDown)
+
+" 跳转到下一个错误或警告
+nmap ge <action>(GotoNextError)
+" 在源代码和测试代码之间快速切换
+nmap gt <action>(GotoTest)
+" 跳转到当前接口或抽象类的实现处
+nmap ga <action>(GotoImplementation)
+
+" 类型声明
+nmap go <action>(GotoTypeDeclaration)
+" 类查找
+nmap gw <action>(GotoClass)
+" 类方法或类成员字段查找
+nmap gs <action>(FileStructurePopup)
+
+" 跳转到定义或引用处
+nmap gd <action>(GotoDeclaration)
+" 查找所有引用，类似vim中的quickfix列表
+nmap gr <action>(FindUsages)
+" 找到被实现的类或方法
+nmap gp <action>(GotoSuperMethod)
+
+" 注释
+nmap gcc <action>(CommentByLineComment)
+xmap gc <action>(CommentByLineComment)<Esc>
+
+" 打开终端
+nmap `` <action>(ActivateTerminalToolWindow)
+
+" 类wildfire
+nmap <Enter> <action>(EditorSelectWord)
+nmap <BS> <action>(EditorUnSelectWord)
+xmap <Enter> <action>(EditorSelectWord)
+xmap <BS> <action>(EditorUnSelectWord)
+
+" ===================================
+" ⭐️⭐️⭐️ Leader Keymaps ⭐️⭐️⭐️
+" ===================================
+
+" 保存与退出
+nmap <leader>q :q<CR>
+nmap <leader>w :w<CR>
+
+"关闭所有标签页
+nmap <leader>ca <action>(CloseAllEditors)
+"关闭当前标签页
+nmap <leader>cd :action CloseEditor<CR>
+"关闭其他标签页
+nmap <leader>co :action CloseAllEditorsButActive<CR>
+
+" 打开文件列表
+nmap <leader>e <action>(ActivateProjectToolWindow)
+
+" 将选中的代码片段提取为一个独立的方法(Ctrl + Alt + M)
+vmap <leader>em <action>(ExtractMethod)
+" 将选中的代码片段抽取为一个常量，并自动替换选中的代码片段为新的常量引用(Ctrl + Alt + C)
+vmap <leader>ec <action>(IntroduceConstant)
+" 将选中的代码片段转化为一个新的字段，并自动将选中的代码片段替换为对该字段的引用(Ctrl + Alt + F)
+vmap <leader>ef <action>(IntroduceField)
+" 将选中的代码片段抽取为一个新的变量，并自动替换选中的代码片段为新的变量引用(Ctrl + Alt + V)
+vmap <leader>ev <action>(IntroduceVariable)
+
+" 文件查找(Ctrl + n)
 nmap <leader>ff <Action>(GotoFile)
-" 全局模糊搜索
+"将当前编辑的文件在项目视图中进行选中定位(Alt + F1)
+nmap <leader>fl <action>(SelectInProjectView)
+" 全局模糊搜索(Ctrl + Shift + F)
 nmap <leader>fg <Action>(FindInPath)
 " 等价于idea中的shift+shift
-nmap <leader>fb <Action>(SearchEverywhere)
+nmap <leader>fs <Action>(SearchEverywhere)
+"打开 "Find Action"（查找动作）对话框(Ctrl + Shift + A)
+nmap <leader>fc <action>(GotoAction)
 " 全局替换
 nmap <leader>fr <Action>(ReplaceInPath)
-" 类查找
-nmap gw <Action>(GotoClass)
-" 类方法或类成员字段查找
-nmap gs <Action>(FileStructurePopup)
-" 实现类或方法查找
-nmap g<space> <Action>(GotoImplementation)
-" 跳转到定义或引用处
-nmap gd <Action>(GotoDeclaration)
-" 查找所有引用，类似vim中的quickfix列表
-nmap gr <Action>(FindUsages)
-" 找到被实现的类或方法
-nmap gp <Action>(GotoSuperMethod)
-" 注释
-nmap gcc <Action>(CommentByLineComment)
-xmap gc <Action>(CommentByLineComment)<Esc>
-" 代码编辑提示
-nmap <leader>ca <Action>(ShowIntentionActions)
-xmap <leader>ca <Action>(ShowIntentionActions)
+" 格式化
+nmap <leader>fm <Action>(ReformatCode)
+
+"生成构造器
+nmap <leader>gc :action GenerateConstructor<CR>
+"生成getter
+nmap <leader>gg :action GenerateGetter<CR>
+"生成setter
+nmap <leader>gs :action GenerateSetter<CR>
+"生成setter和getter
+nmap <leader>ga <action>(GenerateGetterAndSetter)
+"生成 equals() 和 hashcode() 的重写方法
+nmap <leader>ge <action>(GenerateEquals)
+"生成toString
+nmap <leader>gt <action>(Actions.ActionsPlugin.GenerateToString)
+"生成重写方法
+nmap <leader>go <action>(OverrideMethods)
+
+"在当前目录新建文件夹
+nmap <leader>nd <action>(NewDir)
 " 新建类
 nmap <leader>nc <Action>(NewClass)
-" 打开终端
-nmap `` <Action>(ActivateTerminalToolWindow)
+
+" ======窗口管理======
+"向右拆分标签页
+nmap <leader>wv <action>(MoveTabRight)
+"向下拆分标签页
+nmap <leader>ws <action>(MoveTabDown)
+"在另一边打开（前提是有另一边的分割窗口）
+nmap <leader>wo <action>(MoveEditorToOppositeTabGroup)
+"向右复制标签页
+nmap <leader>wc <action>(SplitVertically)
+"取消所有分割窗口
+nmap <leader>wq <action>(UnsplitAll)
+"关闭当前窗口或分割窗格
+nmap <leader>wc <c-w>c
+"取消拆分当前分割窗口
+nmap <leader>wu <action>(Unsplit)
+"跳转到左边的分割窗口
+nmap <leader>h <c-w>h
+"跳转到右边的窗口
+nmap <leader>l <c-w>l
+"跳转到下边的分割窗口
+nmap <leader>j <c-w>j
+"跳转到上边的分割窗口
+nmap <leader>k <c-w>k
+
+"展开所有代码折叠区域(Ctrl + Shift + 加号键)
+nmap <leader>zo <action>(ExpandAllRegions)
+"折叠所有代码折叠区域(Ctrl + Shift + 减号键)
+nmap <leader>zc <action>(CollapseAllRegions)
+
 " 翻译
 xmap <leader>t <Action>($EditorTranslateAction)<Esc>
 nmap <leader>T <Action>($ShowTranslationDialogAction)
 nmap <leader>t viw<Action>($EditorTranslateAction)
-" 格式化
-nmap <leader>fm <Action>(ReformatCode)
+
 " 重命名
-nmap <leader>rn <Action>(RenameElement)
-" 类wildfire
-nmap <Enter> <Action>(EditorSelectWord)
-nmap <BS> <Action>(EditorUnSelectWord)
-xmap <Enter> <Action>(EditorSelectWord)
-xmap <BS> <Action>(EditorUnSelectWord)
-" 找到上一个或下一个突出高亮
-nmap <C-j> <Action>(GotoNextElementUnderCaretUsage)
-nmap <C-k> <Action>(GotoPrevElementUnderCaretUsage)
+nmap <leader>r <Action>(RenameElement)
+
 " 打开最近的项目
-nmap <leader>fs <Action>($LRU)
+nmap <leader>rp <Action>($LRU)
 " 选择主题
-nmap <leader>fc <Action>(ChangeLaf)
+nmap <leader>ct <Action>(ChangeLaf)
 " vim模式开关
 nmap <leader>vim <Action>(VimPluginToggle)
 " 选择idea keymap
 nmap <leader>mp <Action>(ChangeKeymap)
-" 跳转tab
-nmap [t <Action>(PreviousTab)
-nmap ]t <Action>(NextTab)
-" 跳转method
-nmap [f <Action>(MethodUp)
-nmap ]f <Action>(MethodDown)
-" debug
-nmap <leader>dd <Action>(DebugClass)
-nmap <leader>db <Action>(ToggleLineBreakpoint)
-nmap <leader>dr <Action>(EvaluateExpression)
-" git
-nmap <leader>gb <Action>(Annotate)
-" gpt plugin
-nmap <leader>cg <Action>(Generate)
-nmap <leader>ct <Action>(com.note.chatgpt.OpenCodeAiWindow)
-xmap <leader>ck <Action>(com.note.chatgpt.OpenCodeAiWindowWithText)
 
-" sethandler
-sethandler <C-h> a:ide
-sethandler <C-j> a:vim i:ide
-sethandler <C-k> a:vim i:ide
-sethandler <C-l> a:ide
-sethandler <C-S-V> a:vim
+" ======debug======
+" 打断点/解除断点
+nmap <leader>dp <Action>(ToggleLineBreakpoint)
+" 调试
+nmap <leader>db <Action>(Debug)
+" ======run======
+" 运行当前编辑器中的文件或类(Shift + F10)
+nmap <leader>rc :action RunClass<CR>
+" 重新运行最近一次运行的程序或测试(Ctrl+Shift + F10)
+nmap <leader>rr <action>(Rerun)
+" 重新运行最近一次运行的测试（Unit Tests）(Ctrl + Shift + F10)
+nmap <leader>rt <action>(RerunTests)
+" 运行
+map <leader>ru <action>(Run)
+" 停止运行
+nmap <leader>st <action>(Stop) <action>(Stop)
+

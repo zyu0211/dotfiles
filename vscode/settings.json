@@ -23,9 +23,20 @@
     "editor.detectIndentation": false,
     "editor.renderControlCharacters": true,
     "editor.renderWhitespace": "all", //tab 使用空格表示
+    "editor.parameterHints.enabled": false, //关闭自动传参建议
+    "editor.quickSuggestions": { //代码补全建议
+        "other": "off",
+        "comments": "off",
+        "strings": "off"
+    },
+    "workbench.editor.enablePreview": false, //关闭预览模式
+    "workbench.editor.wrapTabs": true,
+    "workbench.editor.highlightModifiedTabs": true,
+    "workbench.startupEditor": "none",
+    "workbench.list.smoothScrolling": true,
+    "workbench.editor.closeOnFileDelete": true,
     "workbench.colorTheme": "One Dark Pro",
     "workbench.iconTheme": "vscode-icons",
-    "workbench.list.smoothScrolling": true,
     "workbench.colorCustomizations": {
         "statusBar.background": "#5f00af",
         "statusBar.noFolderBackground": "#5f00af",
@@ -33,31 +44,41 @@
         "statusBar.foreground": "#ffffff",
         "statusBar.debuggingForeground": "#ffffff"
     },
-    "terminal.integrated.enableMultiLinePasteWarning": false,
+    "terminal.integrated.enableMultiLinePasteWarning": "never",
     "terminal.integrated.smoothScrolling": true,
     "terminal.integrated.fontFamily": "MesloLGM Nerd Font",
     "window.dialogStyle": "custom",
     "debug.showBreakpointsInOverviewRuler": true,
+    "vsicons.dontShowNewVersionMessage": true,
+    "explorer.confirmDelete": false,
+    "explorer.compactFolders": false,
     // ================================================
     // =================== vim设置 =====================
     // ================================================
     "vim.leader": "<space>",
     "vim.easymotion": true,
+    "vim.surround": true,
     "vim.useSystemClipboard": true,
     "vim.ignorecase": true,
     "vim.foldfix": true,
     "vim.hlsearch": true,
     "vim.statusBarColorControl": true,
     "vim.useCtrlKeys": true, //vim 接管 "Ctrl + any" 的组合按键
-    "vim.handleKeys": { // 下面的按键由 VScode 处理
-        "<C-f>": false,
+    "vim.handleKeys": { // 设置为 false，则按键由 VScode 处理
+        "<C-a>": true, // 数字+1
+        "<C-x>": true, // 数字-1
+        "<C-d>": true, // 向下翻半页
+        "<C-f>": true, // 向下翻半页
+        "<C-u>": true, // 向上翻半页
+        "<C-b>": true, // 向上翻一页
+        "<C-r>": true, // 撤销重做
+        "<C-s>": false,
         "<C-z>": false,
         "<C-c>": false,
         "<C-v>": false,
     },
-    // 插入模式下，把 esc 键映射为 jk
     "vim.insertModeKeyBindings": [
-        {
+        { // 插入模式下，把 jk 键映射为 <Esc>
             "before": [
                 "j",
                 "k"
@@ -67,7 +88,7 @@
             ]
         },
     ],
-    "vim.normalModeKeyBindings": [
+    "vim.normalModeKeyBindingsNonRecursive": [
         { //调用 vscode 的全局命令 <==> ctrl + shift + p
             "before": [
                 "<leader>",
@@ -116,13 +137,13 @@
         },
         { // 取消高亮
             "before": [
-                "<C-n>"
+                "<Esc>"
             ],
             "commands": [
                 ":nohl"
             ]
         },
-        {
+        { // 跳转行首
             "before": [
                 "H"
             ],
@@ -130,7 +151,7 @@
                 "^"
             ]
         },
-        {
+        { // 跳转行尾
             "before": [
                 "L"
             ],
@@ -138,32 +159,43 @@
                 "$"
             ]
         },
-        {
+        { // 下一个标签页
             "before": [
-                "leader",
-                "<tab>"
+                "]",
+                "t"
             ],
             "commands": [
                 ":tabnext"
             ],
         },
-        {
+        { // 上一个标签页
             "before": [
-                "leader",
-                "leader",
-                "<tab>"
+                "[",
+                "t"
             ],
             "commands": [
                 ":tabprevious"
             ],
         },
+        { // 跳转到上一个问题
+            "before": [
+                "g",
+                "[",
+            ],
+            "commands": [
+                "editor.action.marker.prevInFiles"
+            ]
+        },
+        { // 跳转到下一个问题
+            "before": [
+                "g",
+                "]",
+            ],
+            "commands": [
+                "editor.action.marker.nextInFiles"
+            ]
+        },
     ],
-    // Highlight Line 插件设置
-    "highlightLine.borderWidth": "1px",
-    "vsicons.dontShowNewVersionMessage": true,
-    // Other 设置
-    "go.toolsManagement.autoUpdate": true,
-    "explorer.confirmDelete": false,
     // ====================================================
     // =================== Latex设置 =======================
     // ====================================================
@@ -280,5 +312,27 @@
     ],
     "latex-workshop.latex.autoClean.run": "onFailed", //当编译失败时，清除辅助文件
     "latex-workshop.latex.recipe.default": "lastUsed", //默认编译链
-    "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click" //反向同步
+    "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
+    // ================================================
+    // ===================== 其他 ======================
+    // ================================================
+    /* Highlight Line 插件设置 */
+    "highlightLine.borderWidth": "1px",
+    /* TODO 插件设置 */
+    "todohighlight.isEnable": true,
+    /* Codegeex 插件设置 */
+    "Codegeex.Privacy": true,
+    "Codegeex.DisabledFor": {
+        "markdown": true,
+        "latex": true
+    },
+    "[go]": {
+        "editor.insertSpaces": true
+    },
+    "Codegeex.CommitMessageStyle": "ConventionalCommits",
+    // Other 设置
+    "go.toolsManagement.autoUpdate": true,
+    // ================================================
+    // ===================== End ======================
+    // ================================================
 }
