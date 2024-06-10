@@ -12,9 +12,10 @@ promptinit
 prompt adam1
 
 setopt histignorealldups sharehistory
+unsetopt beep
 
 # Use emacs keybindings even if our EDITOR is set to vi
-bindkey -e
+bindkey -v
 
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
 HISTSIZE=1000
@@ -22,9 +23,6 @@ SAVEHIST=1000
 HISTFILE=~/.zsh_history
 
 # Use modern completion system
-autoload -Uz compinit
-compinit
-
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
@@ -66,8 +64,17 @@ alias code=/mnt/c/Soft/Microsoft\ VS\ Code/bin/code
 # 设置* 匹配
 setopt no_nomatch
 
+# 编辑器
+export EDITOR=nvim
+
 # 环境变量
 export JAVA_HOME=/usr/lib/jvm/default
+export MAVEN_HOME=/usr/share/java/maven
+
+export GOROOT=/usr/lib/go
+export GOPATH=/home/zyu/go
+export PATH="$PATH:$(go env GOBIN):$(go env GOPATH)/bin"
+
 export NODEJS_HOME=/home/zyu/zTool/nodejs-16.20.1
 
 export PATH=$NODEJS_HOME/bin:$PATH
